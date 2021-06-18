@@ -12,7 +12,7 @@ secondaryDark:"#494949",
 
 errors:"#f44336",
 
-white:"#fafafa",
+white:"#ffffff",
 skyBlue:"#64b5f6"
 
 

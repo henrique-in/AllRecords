@@ -4,12 +4,44 @@ import { color } from '../../theme/colors';
 
 import {Input, Icon, Button} from 'react-native-elements'
 import { styles } from './styles';
-import { RFValue } from 'react-native-responsive-fontsize';
 
+import { useFormik, FormikProps } from "formik"
+import * as Yup from 'yup'
+import InputForm from '~/components/inputForm';
 
+const SignInSchema = Yup.object().shape({
+    email: Yup.string().email('Email Invalido'),
+    password: Yup.string()
+      .min(2, 'Muito curta!')
+      .max(10, 'Muito Longa!')
+  });
+
+  interface LoginFormValues {
+    email: string
+    password?: string
+  }
+  
 const Sign: React.FC = () => {
 
     const [visible, setVisible] = useState(true)
+
+
+  const initialValues: LoginFormValues = { email: "", password: "" }
+
+    const {
+       handleChange,
+       handleSubmit,
+       values,
+       errors,
+       isValid
+      }: FormikProps<any> = useFormik({
+        initialValues,
+        validationSchema: SignInSchema,
+        validateOnMount: true,
+        onSubmit: values => new Promise(async () =>{
+          console.log(values.email.toString().trim().toLowerCase(),values.password)
+        })
+      })
     
   return (
   <SafeAreaView style={{flex:1,backgroundColor: color.background, alignItems:'center'}}>
@@ -31,12 +63,9 @@ const Sign: React.FC = () => {
     </View>
 
     
-    
-        
-        <Input
+        <InputForm
+        placeholder="Email"
         placeholderTextColor={color.primaryLight}
-        placeholder='Email'
-        style={{color: color.white}}
         leftIcon={
             <Icon
             name="email"
@@ -45,13 +74,16 @@ const Sign: React.FC = () => {
             color={color.primaryLight}
             />
         }
+        error={errors.email}
+        onChangeText={handleChange('email')}
         />
 
-        <Input
-        placeholderTextColor={color.primaryLight}
+       <InputForm
         placeholder='Password'
-        style={{color: color.white}}
+        placeholderTextColor={color.primaryLight}
         secureTextEntry={visible}
+        error={errors.password}
+        onChangeText={handleChange('password')}
         leftIcon={
             <Icon
             name="lock"
@@ -60,6 +92,7 @@ const Sign: React.FC = () => {
             color={color.primaryLight}
             />
         }
+
         rightIcon={
             <Icon
             name={visible ? "eye":"eye-slash"}
@@ -70,16 +103,18 @@ const Sign: React.FC = () => {
             />
         }
         />
+        
 
         <Button
             title="Entrar"
             containerStyle={{width:'90%'}}
+            onPress={handleSubmit}
             titleStyle={{color:color.background,fontSize:18, fontWeight:'bold'}}
             buttonStyle={{backgroundColor:color.secondaryLight}}
         />
         
 
-        <TouchableOpacity style={{marginTop:20}}>
+        <TouchableOpacity style={{marginTop:20}} onPress={()=>{}}>
             <Text style={{color:color.skyBlue, fontSize:18}}>Cadastre-se</Text>
         </TouchableOpacity>
         
