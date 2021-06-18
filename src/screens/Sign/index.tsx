@@ -16,6 +16,25 @@ const Sign: React.FC = () => {
   return (
   
   <View style={{flex:1,justifyContent:'center',alignItems:"center",backgroundColor: color.background}}>
+        <Icon
+        name="assignment"
+        size={120}
+        color={color.secondaryLight}
+        style={{paddingBottom:20}}
+        />
+
+        <Text 
+        style={{
+        color:color.secondaryLight,
+        fontSize:28,
+        fontWeight:'bold'
+        }}>
+        
+        All Records
+            
+        
+        </Text>
+        
         <Input
         placeholderTextColor={color.primaryLight}
         placeholder='Email'
@@ -55,13 +74,19 @@ const Sign: React.FC = () => {
         />
 
         <Button
-            title="entrar"
+            title="Entrar"
             containerStyle={{width:'90%'}}
-            
+            titleStyle={{color:color.background,fontSize:18, fontWeight:'bold'}}
             buttonStyle={{backgroundColor:color.secondaryLight}}
-
         />
         
+        <Button
+            title="Cadastre-se"
+            type="clear"
+            containerStyle={{width:'90%', marginTop:20}}
+            titleStyle={{color:color.secondaryLight,fontSize:18, fontWeight:'bold'}}
+            
+        />
 
         
 

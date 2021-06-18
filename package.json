@@ -8,8 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "icon": "npx react-native set-icon --path ./.project/Icon.png ",
-    "splash:android": "react-native set-splash --platform android --path ./.project/Splash.png --background '#FFFFFF'"
+    "splash:android": "react-native set-splash --platform android --path ./.project/Splash.png --background '#1b1b1b'"
   },
   "dependencies": {
     "react": "17.0.1",
