@@ -1,44 +1,42 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, View } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../theme/colors';
 
 import {Input, Icon, Button} from 'react-native-elements'
-
 import { styles } from './styles';
-
+import { RFValue } from 'react-native-responsive-fontsize';
 
 
 const Sign: React.FC = () => {
 
     const [visible, setVisible] = useState(true)
     
-
   return (
-  
-  <View style={{flex:1,justifyContent:'center',alignItems:"center",backgroundColor: color.background}}>
-        <Icon
+  <SafeAreaView style={{flex:1,backgroundColor: color.background, alignItems:'center'}}>
+
+    <View style={styles.container}>
+      <Icon
         name="assignment"
         size={120}
         color={color.secondaryLight}
         style={{paddingBottom:20}}
         />
-
+    
         <Text 
-        style={{
-        color:color.secondaryLight,
-        fontSize:28,
-        fontWeight:'bold'
-        }}>
+        style={styles.title}>
         
         All Records
-            
-        
+    
         </Text>
+    </View>
+
+    
+    
         
         <Input
         placeholderTextColor={color.primaryLight}
         placeholder='Email'
-        style={{color: color.text}}
+        style={{color: color.white}}
         leftIcon={
             <Icon
             name="email"
@@ -52,7 +50,7 @@ const Sign: React.FC = () => {
         <Input
         placeholderTextColor={color.primaryLight}
         placeholder='Password'
-        style={{color: color.text}}
+        style={{color: color.white}}
         secureTextEntry={visible}
         leftIcon={
             <Icon
@@ -67,7 +65,7 @@ const Sign: React.FC = () => {
             name={visible ? "eye":"eye-slash"}
             size={24}
             type="font-awesome"
-            color={color.primaryDark}
+            color={color.secondaryLight}
             onPress={()=> setVisible(!visible)}
             />
         }
@@ -80,17 +78,13 @@ const Sign: React.FC = () => {
             buttonStyle={{backgroundColor:color.secondaryLight}}
         />
         
-        <Button
-            title="Cadastre-se"
-            type="clear"
-            containerStyle={{width:'90%', marginTop:20}}
-            titleStyle={{color:color.secondaryLight,fontSize:18, fontWeight:'bold'}}
-            
-        />
 
+        <TouchableOpacity style={{marginTop:20}}>
+            <Text style={{color:color.skyBlue, fontSize:18}}>Cadastre-se</Text>
+        </TouchableOpacity>
         
-
-  </View>
+    
+  </SafeAreaView>
   
   
   );

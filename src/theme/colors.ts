@@ -10,6 +10,10 @@ secondary:"#757575",
 secondaryLight:"#a4a4a4",
 secondaryDark:"#494949",
 
-text:"#ffff"
+errors:"#f44336",
+
+white:"#fafafa",
+skyBlue:"#64b5f6"
+
 
 }
