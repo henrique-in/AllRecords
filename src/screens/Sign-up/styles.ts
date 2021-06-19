@@ -4,6 +4,13 @@ import { color } from '~/theme/colors'
 
 export const styles = StyleSheet.create({
     container:{
+        flex:1,
+        backgroundColor: color.background, 
+        alignItems:'center',
+     
+        
+    },
+    content:{
         width:"100%",
         height:RFValue(250),
         alignItems:'center',
