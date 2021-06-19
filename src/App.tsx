@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import Sign from './screens/Sign';
+import { AuthRoutes } from './router/auth.routes';
+import {SignIn} from './screens/Sign-in';
 
 
 if(__DEV__) {
@@ -9,7 +10,7 @@ if(__DEV__) {
 
 
 const App: React.FC = () => {
-  return <Sign/>;
+  return <AuthRoutes/>;
 }
 
 export default App;

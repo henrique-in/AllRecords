@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 import { color } from '../../theme/colors';
 
@@ -8,6 +8,9 @@ import { styles } from './styles';
 import { useFormik, FormikProps } from "formik"
 import * as Yup from 'yup'
 import InputForm from '~/components/inputForm';
+import { useNavigation } from '@react-navigation/native';
+
+
 
 const SignInSchema = Yup.object().shape({
     email: Yup.string().email('Email Invalido'),
@@ -16,24 +19,27 @@ const SignInSchema = Yup.object().shape({
       .max(10, 'Muito Longa!')
   });
 
-  interface LoginFormValues {
+  interface SignInFormValues {
     email: string
     password?: string
   }
   
-const Sign: React.FC = () => {
+export const SignIn: React.FC = () => {
 
     const [visible, setVisible] = useState(true)
 
+  const navigation = useNavigation()
 
-  const initialValues: LoginFormValues = { email: "", password: "" }
+
+  const initialValues: SignInFormValues = { email: "", password: "" }
 
     const {
        handleChange,
        handleSubmit,
        values,
        errors,
-       isValid
+       isValid,
+       resetForm,
       }: FormikProps<any> = useFormik({
         initialValues,
         validationSchema: SignInSchema,
@@ -42,11 +48,15 @@ const Sign: React.FC = () => {
           console.log(values.email.toString().trim().toLowerCase(),values.password)
         })
       })
+
+  useEffect(() => {
+    
+  }, [])
     
   return (
-  <SafeAreaView style={{flex:1,backgroundColor: color.background, alignItems:'center'}}>
+  <SafeAreaView style={styles.container}>
 
-    <View style={styles.container}>
+    <View style={styles.content}>
       <Icon
         name="assignment"
         size={120}
@@ -106,7 +116,7 @@ const Sign: React.FC = () => {
         
 
         <Button
-            title="Entrar"
+            title="ENTRAR"
             containerStyle={{width:'90%'}}
             onPress={handleSubmit}
             titleStyle={{color:color.background,fontSize:18, fontWeight:'bold'}}
@@ -114,7 +124,7 @@ const Sign: React.FC = () => {
         />
         
 
-        <TouchableOpacity style={{marginTop:20}} onPress={()=>{}}>
+        <TouchableOpacity style={{marginTop:20}} onPress={()=> navigation.navigate("SignUp")}>
             <Text style={{color:color.skyBlue, fontSize:18}}>Cadastre-se</Text>
         </TouchableOpacity>
         
@@ -124,5 +134,3 @@ const Sign: React.FC = () => {
   
   );
 }
-
-export default Sign;
