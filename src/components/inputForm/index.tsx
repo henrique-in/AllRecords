@@ -44,6 +44,8 @@ const InputForm: React.FC<InputFormProps> = ({error,editable = true,disabled,...
         style={{color:color.white}}
         inputContainerStyle={inputContainerStyle}
         errorStyle={STYLES.ERROR_STYLE}
+        autoCapitalize="none"
+        autoCorrect={false}
         editable={editable}
         errorMessage={error ? error : ""}
         disabled={disabled}
