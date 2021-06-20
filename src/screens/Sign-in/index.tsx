@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, Keyboard, KeyboardAvoidingView, Platform, SafeAreaView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { color } from '../../theme/colors';
 
@@ -10,7 +10,8 @@ import * as Yup from 'yup'
 import InputForm from '~/components/inputForm';
 import { useNavigation } from '@react-navigation/native';
 
-import  * as request from '~/models/requests'
+import {useAuth} from '~/hooks/auth'
+
 
 
 
@@ -33,20 +34,21 @@ export const SignIn: React.FC = () => {
 
   const navigation = useNavigation()
 
-  
+  const {signIn} = useAuth()
 
   const initialValues: SignInFormValues = { email: "", password: "" }
 
-  const accountLogin = async(data: SignInFormValues) =>{
+
+
+  const accountLogin = useCallback (async(data: SignInFormValues) =>{
     setLoading(true)
     try {
-      const result = await request.signIn(data)
-      console.tron.log(result.data)
+       await signIn(data)
     } catch (e) {
      Alert.alert("","Credenciais inválidas")
     }
    setLoading(false)
-  }
+  },[signIn])
 
     const {
        handleChange,
@@ -137,7 +139,7 @@ export const SignIn: React.FC = () => {
               />
           
           </View>
-          
+
             <Button
                 title="ENTRAR"
                 containerStyle={{width:'90%'}}
