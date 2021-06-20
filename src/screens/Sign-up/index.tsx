@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import { FormikProps, useFormik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, SafeAreaView, View, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 
 import * as Yup from 'yup'
@@ -11,6 +11,7 @@ import { color } from '~/theme/colors';
 import { styles } from '../Sign-up/styles';
 
 import  * as request from '~/models/requests'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -71,16 +72,10 @@ export const SignUp: React.FC = () => {
         })
     
   return(
+
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.container}>
-          <Icon
-          name="arrow-back"
-          size={30}
-          color={color.white}
-          onPress={()=> navigation.goBack()}
-          style={{marginLeft:20}}
-          containerStyle={{width:'100%',alignItems:'flex-start'}}
-          />
+      <KeyboardAvoidingView enabled style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined} >
+     
 
         <View style={styles.content}>
             <Icon
@@ -91,7 +86,7 @@ export const SignUp: React.FC = () => {
             </View>
 
 
-      <View style={{width:"95%",marginBottom:20}}>
+      <View style={{width:"95%",marginBottom:20,justifyContent:"center"}}>
 
         <InputForm
         placeholder="Nome"
@@ -165,9 +160,35 @@ export const SignUp: React.FC = () => {
             loading={loading}
         />
 
+        <Button
+          title="Voltar para logon"
+            containerStyle={{
+              width:'100%', 
+              marginTop:20, 
+              position:'absolute',
+              bottom:10,
+              borderTopWidth:1,
+              borderTopColor:color.secondaryDark
+            }}
+            type="clear"
+            onPress={()=> navigation.goBack()}
+            titleStyle={{color:color.white,fontSize:18}}
+           
+            icon={
+              <Icon
+              name="arrow-back"
+              containerStyle={{marginRight:10}}
+              size={30}
+              color={color.white}
+            />
+            }
+        />
 
+
+        
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
+  
   );
 }
 

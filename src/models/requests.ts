@@ -2,13 +2,14 @@ import api from '~/services/api'
 
 
 
-export const signIn = async (data: any) =>{
-    const response = await api.post('login',data);
+
+export const signUp = async (data: any) =>{
+    const response = await api.post('register',data);
     return response;
   };
   
-export const signUp = async (data: any) =>{
-    const response = await api.post('register',data);
+  export const project = async () =>{
+    const response = await api.get('project');
     return response;
   };
   
