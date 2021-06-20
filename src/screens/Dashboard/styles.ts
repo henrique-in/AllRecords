@@ -9,18 +9,4 @@ export const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent: 'center'
     },
-    content:{
-        width:"100%",
-        height:RFValue(200),
-        alignItems:'center',
-        justifyContent:'center',
-        marginBottom:20
-    },
-    title:{
-
-        color:color.secondaryLight,
-        fontSize:28,
-        fontWeight:'bold'
-        
-    }
 })

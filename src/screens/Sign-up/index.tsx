@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { FormikProps, useFormik } from 'formik';
 import React, { useState } from 'react';
-import { Alert, SafeAreaView, View } from 'react-native';
+import { Alert, SafeAreaView, View, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform } from 'react-native';
 
 import * as Yup from 'yup'
 
@@ -10,10 +10,12 @@ import InputForm from '~/components/inputForm';
 import { color } from '~/theme/colors';
 import { styles } from '../Sign-up/styles';
 
+import  * as request from '~/models/requests'
+
 
 
 const SignUpSchema = Yup.object().shape({
-    nome:Yup.string().min(3,'Muito curto').required("Nome é obrigatório"),
+    name:Yup.string().min(3,'Muito curto').required("Nome é obrigatório"),
     email: Yup.string().email('Email Invalido').required("Email é obrigatório"),
     password: Yup.string()
       .min(2, 'Muito curta!')
@@ -22,9 +24,9 @@ const SignUpSchema = Yup.object().shape({
   });
 
   interface SignUpFormValues {
-    nome: string,
+    name: string,
     email: string,
-    password?: string,
+    password: string,
   }
 
 
@@ -34,11 +36,22 @@ export const SignUp: React.FC = () => {
     const navigation = useNavigation()
 
     const [visible, setVisible] = useState(true)
+    const [loading, setLoading] = useState(false)
 
 
+    const registerAccount = async(data: SignUpFormValues) => {
+      setLoading(true)
+      try {
+        const result = await request.signUp(data)
+        navigation.goBack()
+      } catch (error) {
+        Alert.alert("","Ocorreu um erro ao realizar o cadastro, tente novamente!")
+      }
+      setLoading(false)
+    }
   
   
-    const initialValues: SignUpFormValues = { nome:"" ,email: "", password: "" }
+    const initialValues: SignUpFormValues = { name:"" ,email: "", password: "" }
   
       const {
          handleChange,
@@ -52,14 +65,14 @@ export const SignUp: React.FC = () => {
           validationSchema: SignUpSchema,
           validateOnMount: true,
           onSubmit: values => new Promise(async () =>{
-            console.log(values.nome,values.email.toString().trim().toLowerCase(),values.password)
-            Alert.alert("","Conta criada com sucesso")
-            navigation.goBack()
+            console.log(values.name,values.email.toString().trim().toLowerCase(),values.password)
+            registerAccount({name:values.name,email:values.email ,password:values.password})
           })
         })
     
   return(
-      <SafeAreaView style={styles.container}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.container}>
           <Icon
           name="arrow-back"
           size={30}
@@ -77,8 +90,13 @@ export const SignUp: React.FC = () => {
                 />
             </View>
 
+
+      <View style={{width:"95%",marginBottom:20}}>
+
         <InputForm
         placeholder="Nome"
+        returnKeyLabel="name"
+        returnKeyType="next"
         placeholderTextColor={color.primaryLight}
         leftIcon={
             <Icon
@@ -88,12 +106,14 @@ export const SignUp: React.FC = () => {
             color={color.primaryLight}
             />
         }
-        error={errors.nome}
-        onChangeText={handleChange('nome')}
+        error={errors.name}
+        onChangeText={handleChange('name')}
         />
 
         <InputForm
         placeholder="Email"
+        returnKeyLabel="email"
+        returnKeyType="next"
         placeholderTextColor={color.primaryLight}
         leftIcon={
             <Icon
@@ -111,6 +131,8 @@ export const SignUp: React.FC = () => {
         placeholder='Password'
         placeholderTextColor={color.primaryLight}
         secureTextEntry={visible}
+        returnKeyLabel="password"
+        returnKeyType="done"
         error={errors.password}
         onChangeText={handleChange('password')}
         leftIcon={
@@ -132,6 +154,7 @@ export const SignUp: React.FC = () => {
             />
         }
         />
+      </View>
 
         <Button
             title="CRIAR CONTA"
@@ -139,11 +162,12 @@ export const SignUp: React.FC = () => {
             onPress={handleSubmit}
             titleStyle={{color:color.background,fontSize:18, fontWeight:'bold'}}
             buttonStyle={{backgroundColor:color.secondaryLight}}
-            
+            loading={loading}
         />
 
 
-      </SafeAreaView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 
