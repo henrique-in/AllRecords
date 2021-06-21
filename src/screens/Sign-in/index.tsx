@@ -2,12 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, Keyboard, KeyboardAvoidingView, Platform, SafeAreaView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { color } from '../../theme/colors';
 
-import {Input, Icon, Button} from 'react-native-elements'
+import {Icon, Button} from 'react-native-elements'
 import { styles } from './styles';
 
 import { useFormik, FormikProps } from "formik"
 import * as Yup from 'yup'
-import InputForm from '~/components/inputForm';
+import {InputForm }from '~/components';
 import { useNavigation } from '@react-navigation/native';
 
 import {useAuth} from '~/hooks/auth'
@@ -16,10 +16,10 @@ import {useAuth} from '~/hooks/auth'
 
 
 const SignInSchema = Yup.object().shape({
-    email: Yup.string().email('Email Invalido'),
+    email: Yup.string().email('Email Invalido').required(''),
     password: Yup.string()
       .min(2, 'Muito curta!')
-      .max(10, 'Muito Longa!')
+      .max(10, 'Muito Longa!').required('')
   });
 
   interface SignInFormValues {
@@ -62,9 +62,9 @@ export const SignIn: React.FC = () => {
         validationSchema: SignInSchema,
         validateOnMount: true,
         onSubmit: values => new Promise(async () =>{
-          console.log(values.email.toString().trim().toLowerCase(),values.password)
         
           accountLogin({email:values.email, password: values.password})
+          
         })
       })
 
@@ -147,6 +147,7 @@ export const SignIn: React.FC = () => {
                 titleStyle={{color:color.background,fontSize:18, fontWeight:'bold'}}
                 buttonStyle={{backgroundColor:color.secondaryLight}}
                 loading={loading}
+                
             />
             
 

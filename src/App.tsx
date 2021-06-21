@@ -15,11 +15,11 @@ if(__DEV__) {
 
 
 const App: React.FC = () => {
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     SplashScreen.hide();
-  //   }, 1000);
-  // }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 1000);
+  }, []);
 
   return(
      <NavigationContainer >

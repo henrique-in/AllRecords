@@ -26,7 +26,7 @@ const STYLES = {
     } as ViewStyle
   }
 
-const InputForm: React.FC<InputFormProps> = ({error,editable = true,disabled,...rest}) => {
+export const InputForm: React.FC<InputFormProps> = ({error,editable = true,disabled,...rest}) => {
     const [focused, setFocused] = useState(false)
 
     const Focus = () =>{
@@ -54,4 +54,3 @@ const InputForm: React.FC<InputFormProps> = ({error,editable = true,disabled,...
   );
 }
 
-export default InputForm;
