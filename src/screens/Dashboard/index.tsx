@@ -13,7 +13,7 @@ import  * as request from '~/models/requests'
 import ModalCreate from './components/create-project';
 import { ActivityIndicator } from 'react-native-paper';
 
-var jwtDecode = require('jwt-decode')
+
 
 
 
@@ -28,8 +28,6 @@ export const Dashboard: React.FC = () => {
 
   const [dados, setDados] = useState()
 
-  
- console.log(user.email)
 
   const openModal = () =>{
     setVisible(!visible)
@@ -55,7 +53,9 @@ export const Dashboard: React.FC = () => {
   <View style={{flex:1 , backgroundColor: color.secondaryDark}}>
     <Header
     containerStyle={{backgroundColor:color.secondaryDark}}
-    leftComponent={{text:"Projetos", style:{color:color.white,fontSize:18,fontWeight:'bold'}}}
+    placement='left'
+    leftComponent={{ icon: 'account-circle', color: '#fff' , size: 30}}
+    centerComponent={{text:`${user.name}`, style:{color:color.white,fontSize:18,fontWeight:'bold'}}}
     rightComponent={<Icon name="logout" size={30} color={color.redLight} onPress={signOut} />}
     />
     

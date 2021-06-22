@@ -28,10 +28,9 @@ import jwtDecode from 'jwt-decode';
   }
   
   interface User {
-    id: string;
+    _id: string;
     name: string;
     email: string;
-    avatar_url: string;
   }
   
   const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -40,7 +39,6 @@ import jwtDecode from 'jwt-decode';
     const [data, setData] = useState<AuthState>({} as AuthState);
     const [loading, setLoading] = useState(true);
 
-   const [userData, setUserData] = useState()
   
     useEffect(() => {
       async function loadStorageData(): Promise<void> {
@@ -52,7 +50,7 @@ import jwtDecode from 'jwt-decode';
         if (access_token[1] && user[1]) {
           api.defaults.headers.authorization = `Bearer ${access_token[1]}`;
   
-          setData({ access_token: access_token[1], user:user[1] });
+          setData({ access_token: access_token[1], user:JSON.parse(user[1]) });
         }
   
         setLoading(false);

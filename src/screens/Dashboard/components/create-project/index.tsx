@@ -12,6 +12,8 @@ interface ModalCreateProps extends ModalProps{
     load?:any
 }
 
+
+
 const ModalCreate: React.FC<ModalCreateProps> = ({isVisible, onClose, item, load}) => {
 
     const [name, setName] = useState('')
@@ -42,7 +44,7 @@ const ModalCreate: React.FC<ModalCreateProps> = ({isVisible, onClose, item, load
         label="Projeto"
         labelStyle={{color:color.white}}
         value={name}
-        onChangeText={text => setName(text)}
+        onChangeText={text => setName((text))}
         />
 
         <Button

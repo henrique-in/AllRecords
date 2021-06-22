@@ -4,13 +4,14 @@ import { FieldInputProps,FieldMetaProps } from "formik"
 import {Input,InputProps} from 'react-native-elements'
 import { color } from '~/theme/colors';
 
-// import { Container } from './styles';
+
 
 
 interface InputFormProps extends InputProps{
  error?:any
  editable?: boolean
  disabled?: boolean
+
 }
 
 const STYLES = {
@@ -26,7 +27,7 @@ const STYLES = {
     } as ViewStyle
   }
 
-export const InputForm: React.FC<InputFormProps> = ({error,editable = true,disabled,...rest}) => {
+export const InputForm: React.FC<InputFormProps> = ({ error,editable = true,disabled,...rest}) => {
     const [focused, setFocused] = useState(false)
 
     const Focus = () =>{
@@ -36,6 +37,9 @@ export const InputForm: React.FC<InputFormProps> = ({error,editable = true,disab
     const inputContainerStyle ={
         ...(focused ? editable && {borderColor: color.white} : !editable && {borderColor: "transparent"} )
     }
+
+    
+ 
 
   return (
       <Input
