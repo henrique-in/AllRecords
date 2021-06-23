@@ -7,10 +7,11 @@ import React, {
   } from 'react';
   import AsyncStorage from '@react-native-async-storage/async-storage';
   import api from '../services/api';
+import jwtDecode from 'jwt-decode';
   
   interface AuthState {
     access_token: string;
-    user: string;
+    user: User;
   }
   
   interface SignInCredentials {
@@ -19,7 +20,7 @@ import React, {
   }
   
   interface AuthContextData {
-    user: string;
+    user: User;
     loading: boolean;
     signIn(credentials: SignInCredentials): Promise<void>;
     signOut(): void;
@@ -27,10 +28,9 @@ import React, {
   }
   
   interface User {
-    id: string;
+    _id: string;
     name: string;
     email: string;
-    avatar_url: string;
   }
   
   const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -38,6 +38,7 @@ import React, {
   export const AuthProvider: React.FC = ({ children }) => {
     const [data, setData] = useState<AuthState>({} as AuthState);
     const [loading, setLoading] = useState(true);
+
   
     useEffect(() => {
       async function loadStorageData(): Promise<void> {
@@ -49,7 +50,7 @@ import React, {
         if (access_token[1] && user[1]) {
           api.defaults.headers.authorization = `Bearer ${access_token[1]}`;
   
-          setData({ access_token: access_token[1], user:user[1] });
+          setData({ access_token: access_token[1], user:JSON.parse(user[1]) });
         }
   
         setLoading(false);
@@ -65,16 +66,19 @@ import React, {
       });
   
       const { access_token } = response.data;
+      const decode = jwtDecode(access_token)
+      const  user  = decode._doc
+
       
-  
+      
       await AsyncStorage.multiSet([
         ['@AllRecords:access_token', access_token],
-        ['@AllRecords:user', 'logged'],
+        ['@AllRecords:user', JSON.stringify(user)],
       ]);
   
       api.defaults.headers.authorization = `Bearer ${access_token}`;
   
-      setData({ access_token, user:'logged' });
+      setData({ access_token, user });
     }, []);
   
     const signOut = useCallback(async () => {
@@ -88,7 +92,7 @@ import React, {
         await AsyncStorage.setItem('@AllRecords:user', JSON.stringify(user));
         setData({
           access_token: data.access_token,
-          user:'logged',
+          user,
         });
       },
       [setData, data.access_token],

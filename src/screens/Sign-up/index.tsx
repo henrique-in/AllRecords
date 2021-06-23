@@ -6,7 +6,7 @@ import { Alert, SafeAreaView, View, TouchableWithoutFeedback, Keyboard, Keyboard
 import * as Yup from 'yup'
 
 import { Button, Icon } from 'react-native-elements';
-import InputForm from '~/components/inputForm';
+import {InputForm} from '~/components/inputForm';
 import { color } from '~/theme/colors';
 import { styles } from '../Sign-up/styles';
 

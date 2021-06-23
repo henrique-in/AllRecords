@@ -12,8 +12,11 @@ secondaryDark:"#494949",
 
 errors:"#f44336",
 
+redLight:"#ff5f52",
+
 white:"#ffffff",
-skyBlue:"#64b5f6"
+skyBlue:"#64b5f6",
+green:"#4caf50"
 
 
 }
