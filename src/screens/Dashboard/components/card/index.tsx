@@ -6,7 +6,7 @@ import { Icon, ListItem } from 'react-native-elements';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { BarChart, Grid, LineChart, PieChart, StackedBarChart, XAxis } from 'react-native-svg-charts'
-import { VictoryBar, VictoryChart, VictoryPie, VictoryTheme } from "victory-native";
+import { VictoryBar, VictoryChart, VictoryPie ,VictoryTheme } from "victory-native";
 
 import { color } from '~/theme/colors';
 
@@ -134,50 +134,24 @@ function order(a: { text: string; },b: { text: string; }) {
                             <Text style={styles.text}>Total de horas: {totalHours ? totalHours : '0'}</Text>
                             
                         </View>
-                        {/* <Icon 
-                            name="add"
-                            size={25}
-                            containerStyle={{backgroundColor:color.white,borderRadius:50, marginLeft:5}}
-                            onPress={()=> openModal(data)}
-                            /> */}
+                        
                          <Icon name="add" size={20} raised color={color.background}  onPress={()=> openModal(data)}/>
                  
                 </View> 
         
-                {/* <Text style={{fontWeight:'bold',color:color.white,fontSize:18, alignSelf:'center'}}>Horas utilizadas por dia</Text>
-                <ScrollView  showsVerticalScrollIndicator={false}>
-                    <FlatList
-                    data={hourData}
-                    keyExtractor={item => item._id}
-                    renderItem={({item})=> (
-                        <ListItem 
-                        bottomDivider
-                        containerStyle={{backgroundColor:'transparent'}}
-                        >
-                            <ListItem.Content>
-                                <ListItem.Title style={{color:color.white, fontWeight:'bold'}}>
-                                {item.day}
-                                </ListItem.Title>
-                                <ListItem.Subtitle style={{color:color.white}}>
-                                    {item.hours} horas
-                                </ListItem.Subtitle>
-                            
-                            </ListItem.Content>
-                            <Icon name="delete" size={19} raised color={color.redLight} onPress={handleDelete}/>
-                        </ListItem>
-                    )}
-                    />    
-                </ScrollView> */}
+    
       
         {
             value.length > 1 ?
             <View style={{width:'100%', alignItems:'center'}}>
                 <VictoryChart  
                     width={RFValue(350)} height={200} 
-                    theme={VictoryTheme.grayscale}
+                    
                      >
 
                     <VictoryBar 
+                  
+                     barWidth={10}
                     style={{ data: { fill:"#FFF" }}}
                     data={value} 
                     x="text" 
