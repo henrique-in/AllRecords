@@ -5,8 +5,8 @@ import {List, Switch} from 'react-native-paper'
 import { Icon, ListItem } from 'react-native-elements';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-import { BarChart, Grid, PieChart, XAxis } from 'react-native-svg-charts'
-import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
+import { BarChart, Grid, LineChart, PieChart, StackedBarChart, XAxis } from 'react-native-svg-charts'
+import { VictoryBar, VictoryChart, VictoryPie, VictoryTheme } from "victory-native";
 
 import { color } from '~/theme/colors';
 
@@ -73,19 +73,10 @@ const loadHours = async() =>{
        setHourData(result)
        var hours = result.reduce((a: any, b: { hours: any; }) => a + b.hours, 0)
        setTotalHours(hours)
-
-       setValue(result.map(({hours, day}) => ({text: moment(day).format('DD/MM') , value: hours}) ))
-       console.log(value)
-
-       var dados = []
-
-        for(let elemento of result){
-            dados.push(elemento.hours);
-        }
-
-      
-    
      
+      setValue(result.map(({hours, day}) => ({text: moment(day).format('DD/MM') , value: hours}) ))
+      
+     console.log(value)
     } catch (error) {
         
     }
@@ -109,6 +100,10 @@ const removeHour = async() =>{
         
     }
 }
+
+function order(a: { text: string; },b: { text: string; }) {
+    return a.text > b.text
+  }
 
 
   return (
@@ -145,7 +140,7 @@ const removeHour = async() =>{
                             containerStyle={{backgroundColor:color.white,borderRadius:50, marginLeft:5}}
                             onPress={()=> openModal(data)}
                             /> */}
-                         <Icon name="add" size={20} raised color={color.background} onPress={handleDelete}/>
+                         <Icon name="add" size={20} raised color={color.background}  onPress={()=> openModal(data)}/>
                  
                 </View> 
         
@@ -174,9 +169,32 @@ const removeHour = async() =>{
                     />    
                 </ScrollView> */}
       
-      
-       
+        {
+            value.length > 1 ?
+            <View style={{width:'100%', alignItems:'center'}}>
+            <VictoryChart 
+             
+             width={RFValue(350)} height={200} theme={VictoryTheme.grayscale} >
+            <VictoryBar 
+            data={value} 
+            x="text" 
+            y="value"
+           
+            
+             />
+            </VictoryChart>
+            </View> 
+            :
+            <View style={{height:"40%",width:'100%', alignItems:'center', justifyContent:'center'}}>
+            <Text style={{color:color.white, fontSize:18}}>Sem dados para renderizar</Text>
+            </View> 
+        }
+                
            </View>
+          
+    
+
+          
 
           </List.Accordion>
           <ModalHours  isVisible={projectData !== null} item={projectData} onClose={()=>openModal(null)} load={()=> reloadAll()}  />
