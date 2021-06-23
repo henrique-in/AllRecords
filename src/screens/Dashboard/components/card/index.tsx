@@ -172,17 +172,18 @@ function order(a: { text: string; },b: { text: string; }) {
         {
             value.length > 1 ?
             <View style={{width:'100%', alignItems:'center'}}>
-            <VictoryChart 
-             
-             width={RFValue(350)} height={200} theme={VictoryTheme.grayscale} >
-            <VictoryBar 
-            data={value} 
-            x="text" 
-            y="value"
-           
-            
-             />
-            </VictoryChart>
+                <VictoryChart  
+                    width={RFValue(350)} height={200} 
+                    theme={VictoryTheme.grayscale}
+                     >
+
+                    <VictoryBar 
+                    style={{ data: { fill:"#FFF" }}}
+                    data={value} 
+                    x="text" 
+                    y="value"
+                    />
+                </VictoryChart>
             </View> 
             :
             <View style={{height:"40%",width:'100%', alignItems:'center', justifyContent:'center'}}>
