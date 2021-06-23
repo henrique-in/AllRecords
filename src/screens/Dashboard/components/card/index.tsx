@@ -87,19 +87,7 @@ const reloadAll = () =>{
     loadHours()
 }
 
-const removeHour = async() =>{
-    try {
-        const result = await request.addHour({
-            hours: 20,
-            day:'54' ,
-            project:data._id,
-            user: user._id
-            })
-       
-    } catch (error) {
-        
-    }
-}
+
 
 function order(a: { text: string; },b: { text: string; }) {
     return a.text > b.text
